@@ -176,6 +176,8 @@ func TestClientDisconnectionFlow499(t *testing.T) {
 		TxValidationMiddlewareConfig{},     // txValidationConfig
 		10*time.Second,                     // gracefulShutdownDuration
 		defaultMaxConcurrentWSRPCs,         // maxConcurrentWSRPCs
+		false,                              // gracefulShutdownIdle
+		10*time.Second,                     // gracefulShutdownIdleDuration
 	)
 	require.NoError(t, err)
 
