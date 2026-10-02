@@ -142,9 +142,10 @@ var (
 	rpcBackendRequestDurationSumm = promauto.NewSummaryVec(prometheus.SummaryOpts{
 		Namespace:  MetricsNamespace,
 		Name:       "rpc_backend_request_duration_seconds",
-		Help:       "Summary of backend response times broken down by backend and method name.",
+		Help:       "Summary of backend response times broken down by auth, backend and method name.",
 		Objectives: map[float64]float64{0.5: 0.05, 0.9: 0.01, 0.95: 0.005, 0.99: 0.001},
 	}, []string{
+		"auth",
 		"backend_name",
 		"method_name",
 		"batched",

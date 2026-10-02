@@ -658,6 +658,7 @@ func (b *Backend) ForwardWithSource(ctx context.Context, reqs []*RPCReq, isBatch
 		}
 		timer := prometheus.NewTimer(
 			rpcBackendRequestDurationSumm.WithLabelValues(
+				GetAuthCtx(ctx),
 				b.Name,
 				metricLabelMethod,
 				strconv.FormatBool(isBatch),
