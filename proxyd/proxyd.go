@@ -546,6 +546,8 @@ func Start(config *Config) (*Server, func(), error) {
 		config.TxValidationMiddlewareConfig,
 		time.Duration(config.Server.GracefulShutdownSeconds)*time.Second,
 		config.Server.MaxConcurrentWSRPCs,
+		config.Server.GracefulShutdownIdle,
+		gracefulShutdownIdleDuration(config.Server.GracefulShutdownIdleSeconds),
 	)
 	if err != nil {
 		return nil, nil, fmt.Errorf("error creating server: %w", err)
@@ -747,6 +749,13 @@ func Start(config *Config) (*Server, func(), error) {
 	}
 
 	return srv, shutdownFunc, nil
+}
+
+func gracefulShutdownIdleDuration(seconds int) time.Duration {
+	if seconds <= 0 {
+		return 10 * time.Second
+	}
+	return time.Duration(seconds) * time.Second
 }
 
 func validateReceiptsTarget(val string) (string, error) {
